@@ -1,7 +1,12 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FormPage;
@@ -11,8 +16,26 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FormTest extends BaseTest {
+public class FormTest{
     private static final Logger logger = LogManager.getLogger(FormPage.class);
+
+    protected WebDriver driver;
+
+    @BeforeEach
+    public void setUp(){
+        logger.info("Настройка драйвера и открытие браузера");
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        if (driver!= null) {
+            logger.info("Закрытие браузера");
+            driver.quit();
+        }
+    }
 
     @Test
     public void testFormSubmission() {
