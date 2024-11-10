@@ -1,3 +1,4 @@
+import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,9 +25,13 @@ public class FormTest{
     @BeforeEach
     public void setUp(){
         logger.info("Настройка драйвера и открытие браузера");
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        String browser = System.getProperty("browser", "chrome");
+        String baseUrl = System.getProperty("baseUrl", "https://otus.home.kartushin.su/form.html");
+        String mode = System.getProperty("mode", "headless");
+        driver = WebDriverFactory.getBrowser(browser, mode);
+        //driver.manage().window().maximize();
+        driver.get(baseUrl);
+        logger.info("Перешли на страницу: " + baseUrl);
     }
 
     @AfterEach
@@ -39,7 +44,6 @@ public class FormTest{
 
     @Test
     public void testFormSubmission() {
-        driver.get("https://otus.home.kartushin.su/form.html");
         FormPage formPage = new FormPage(driver);
 
         String username = "TestUser";
