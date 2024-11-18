@@ -1,5 +1,6 @@
 package pages;
 
+import data.LanguageLevel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -12,10 +13,9 @@ import java.text.Normalizer;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class FormPage {
+public class FormPage extends BasePage{
     private static final Logger logger = LogManager.getLogger(FormPage.class);
 
-    private WebDriver driver;
     private By usernameField = By.id("username");
     private By emailField = By.id("email");
     private By passwordField = By.id("password");
@@ -26,7 +26,7 @@ public class FormPage {
     private By submitButton = By.cssSelector("input[type='submit']");
 
     public FormPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void enterUsername(String username) {
@@ -65,10 +65,10 @@ public class FormPage {
         driver.findElement(dateOfBirthField).sendKeys(dob);
     }
 
-    public void selectLanguageLevel(String level) {
+    public void selectLanguageLevel(LanguageLevel level) {
         WebElement dropdown = driver.findElement(languageLevelSelect);
         Select select = new Select(dropdown);
-        select.selectByValue(level);
+        select.selectByValue(String.valueOf(level));
     }
 
     public void submitForm() {

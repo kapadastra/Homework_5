@@ -1,3 +1,4 @@
+import data.LanguageLevel;
 import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
@@ -26,12 +27,12 @@ public class FormTest{
     public void setUp(){
         logger.info("Настройка драйвера и открытие браузера");
         String browser = System.getProperty("browser", "chrome");
-        String baseUrl = System.getProperty("baseUrl", "https://otus.home.kartushin.su/form.html");
+        //String baseUrl = System.getProperty("baseUrl", "https://otus.home.kartushin.su/form.html");
         String mode = System.getProperty("mode", "headless");
         driver = WebDriverFactory.getBrowser(browser, mode);
-        //driver.manage().window().maximize();
-        driver.get(baseUrl);
-        logger.info("Перешли на страницу: " + baseUrl);
+        logger.info("Драйвер настроен.");
+        //driver.get(baseUrl);
+        //logger.info("Перешли на страницу: " + baseUrl);
     }
 
     @AfterEach
@@ -44,13 +45,16 @@ public class FormTest{
 
     @Test
     public void testFormSubmission() {
+        String baseUrl = System.getProperty("baseUrl", "https://otus.home.kartushin.su/form.html");
         FormPage formPage = new FormPage(driver);
+        formPage.open(baseUrl);
 
         String username = "TestUser";
         String email = "testuser@example.com";
-        String password = "securePassword";
+        String password = System.getProperty("password", "123456789");
         String birthdate = "01012000";
-        String languageLevel = "intermediate";
+        LanguageLevel languageLevel = LanguageLevel.intermediate;
+
 
         formPage.enterUsername(username); // Ввод имя пользователя
 
@@ -60,7 +64,7 @@ public class FormTest{
 
         formPage.selectDateOfBirth(birthdate); // Ввод даты рождения
 
-        formPage.selectLanguageLevel(languageLevel); // Выбор укроня языка
+        formPage.selectLanguageLevel(languageLevel); // Выбор уровня языка
 
         logger.info("Проверка совпадения паролей перед отправкой формы");
         assertTrue(formPage.isPasswordMatching(), "Пароли не совпадают!");

@@ -87,6 +87,8 @@
                     <systemPropertyVariables>
                         <browser>chrome</browser> <!-- Выбор браузера -->
                         <baseUrl>https://otus.home.kartushin.su/form.html</baseUrl> <!-- Выбор стенда -->
+                        <mode>headless</mode>
+                        <password>01012000</password>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
