@@ -68,7 +68,7 @@ public class FormPage extends BasePage{
     public void selectLanguageLevel(LanguageLevel level) {
         WebElement dropdown = driver.findElement(languageLevelSelect);
         Select select = new Select(dropdown);
-        select.selectByValue(String.valueOf(level));
+        select.selectByValue(level.getValue());
     }
 
     public void submitForm() {

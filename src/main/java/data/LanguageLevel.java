@@ -1,9 +1,9 @@
 package data;
 
 public enum LanguageLevel {
-    beginner("beginner"),
-    intermediate("intermediate"),
-    advanced("advanced"),
+    BEGINNER("beginner"),
+    INTERMEDIATE("intermediate"),
+    ADVANCED("advanced"),
     NATIVE("native");
 
     private final String value;

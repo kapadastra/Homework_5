@@ -51,9 +51,9 @@ public class FormTest{
 
         String username = "TestUser";
         String email = "testuser@example.com";
-        String password = System.getProperty("password", "123456789");
+        String password = System.getProperty("password");
         String birthdate = "01012000";
-        LanguageLevel languageLevel = LanguageLevel.intermediate;
+        LanguageLevel languageLevel = LanguageLevel.INTERMEDIATE;
 
 
         formPage.enterUsername(username); // Ввод имя пользователя
