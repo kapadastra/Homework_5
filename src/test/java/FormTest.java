@@ -9,10 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FormPage;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -24,15 +28,21 @@ public class FormTest{
     protected WebDriver driver;
 
     @BeforeEach
-    public void setUp(){
-        logger.info("Настройка драйвера и открытие браузера");
+    public void setUp() throws MalformedURLException {
+
         String browser = System.getProperty("browser", "chrome");
-        //String baseUrl = System.getProperty("baseUrl", "https://otus.home.kartushin.su/form.html");
-        String mode = System.getProperty("mode", "headless");
-        driver = WebDriverFactory.getBrowser(browser, mode);
-        logger.info("Драйвер настроен.");
-        //driver.get(baseUrl);
-        //logger.info("Перешли на страницу: " + baseUrl);
+        String gridUrl = System.getProperty("gridUrl", "http://localhost:4444/wd/hub");
+        String mode = System.getProperty("mode", "local");
+
+        if (mode.equalsIgnoreCase("remote")) {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browser);
+
+            driver = new RemoteWebDriver(new URL(gridUrl), capabilities);
+        } else {
+            driver = WebDriverFactory.getBrowser(browser, mode);
+        }
+
     }
 
     @AfterEach
