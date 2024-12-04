@@ -32,16 +32,9 @@ public class FormTest{
 
         String browser = System.getProperty("browser", "chrome");
         String gridUrl = System.getProperty("gridUrl", "http://localhost:4444/wd/hub");
-        String mode = System.getProperty("mode", "local");
+        String mode = System.getProperty("mode", "headless");
 
-        if (mode.equalsIgnoreCase("remote")) {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setBrowserName(browser);
-
-            driver = new RemoteWebDriver(new URL(gridUrl), capabilities);
-        } else {
-            driver = WebDriverFactory.getBrowser(browser, mode);
-        }
+        driver = WebDriverFactory.getBrowser(browser, mode, gridUrl);
 
     }
 
